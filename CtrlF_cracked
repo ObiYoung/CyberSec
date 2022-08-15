@@ -1,0 +1,47 @@
+import re
+ 
+index = 0
+ 
+# User inputs file name for naming convention purposes
+filename =input("Type in file name\n")
+filetype = input("Type in file type (.txt, .csv, etc)\n")
+ 
+# User copies filepath of file they want to parse text for
+main = input("Copy file path for file that you would like to open\n")
+ 
+# Opens file that user inputs
+file = open(main, encoding="utf8")
+ 
+# Each line is saved to this lines variable
+lines = file.readlines()
+ 
+# Closes file after reading each line
+file.close()
+ 
+# Variable that changes later if user wants to exit
+exit = True
+ 
+# While loop until user wants to exit program
+while exit:
+    # User inputs text that they want to search for
+    text = input("Enter text: \n")
+ 
+    # For loop that goes through each character in each line
+    for line in lines:
+ 
+        # If text is found in line then a new file will be opened and it will grab the entire line and copy it to the new file
+        if re.search(text, line):
+            f = open(text + '-' + filename + filetype, 'a')
+            f.write(line)
+            f.close()
+            # Sets index to 1 for error checking measures
+            index = 1
+ 
+    # If no text was found it will print error message
+    if index != 1:
+        print("Text not found")
+ 
+    # Prompts user if they would like to search again or exit
+    prompt = input("Would you like to search again? (Select number) \n1) Yes\n2) Exit\n")
+    if prompt != '1':
+        exit = False
